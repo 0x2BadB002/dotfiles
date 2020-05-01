@@ -1,8 +1,6 @@
 Dotfiles
 =================
 
-Applications:
-
 | Program              | Name                |
 |----------------------|---------------------|
 | Window manager       | `bspwm`             |

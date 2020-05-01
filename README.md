@@ -2,6 +2,9 @@ Dotfiles
 =================
 
 Applications:
+
+| Program              | Name                |
+|----------------------|---------------------|
 | Window manager       | `bspwm`             |
 | Window Compositor    | `picom`             |
 | Notification daemon  | `dunst`             |

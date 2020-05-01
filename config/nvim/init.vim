@@ -2,7 +2,10 @@ call plug#begin('~/.config/nvim/bundle')
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'scrooloose/nerdtree'
 Plug 'bling/vim-airline'
-Plug 'w0rp/ale'
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
 Plug 'townk/vim-autoclose'
 Plug 'arcticicestudio/nord-vim'
 " call PlugInstall to install new plugins
@@ -17,6 +20,7 @@ set incsearch
 set ignorecase
 set smartcase
 set nohlsearch
+set hidden
 set tabstop=4
 set softtabstop=0
 set shiftwidth=4
@@ -48,7 +52,7 @@ nmap <silent> <c-l> :wincmd l<CR>
 " change spacing for language specific
 autocmd Filetype javascript setlocal ts=2 sts=2 sw=2
 
-" plugin settings
+" Plugin settings
 
 " deoplete
 let g:deoplete#enable_at_startup = 1
@@ -58,6 +62,42 @@ inoremap <silent><expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <silent><expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 " Close the documentation window when completion is done
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+" LanguageClient
+let g:LanguageClient_serverCommands = {
+    \ 'rust': ['rustup', 'run', 'stable', 'rls'],
+    \ 'c': ['ccls'],
+    \ 'cpp': ['ccls'],
+    \ }
+" Goto definition in spilt
+call LanguageClient#textDocument_definition({'gotoCmd': 'split'})
+" Snippets
+let g:neosnippet#enable_complete_done = 1
+
+" Key bindings
+function SetLSPShortcuts()
+  nnoremap <leader>d :call LanguageClient#textDocument_definition()<CR>
+  nnoremap <leader>r :call LanguageClient#textDocument_rename()<CR>
+  nnoremap <leader>f :call LanguageClient#textDocument_formatting()<CR>
+  nnoremap <leader>t :call LanguageClient#textDocument_typeDefinition()<CR>
+  nnoremap <leader>x :call LanguageClient#textDocument_references()<CR>
+  nnoremap <leader>a :call LanguageClient_workspace_applyEdit()<CR>
+  nnoremap <leader>c :call LanguageClient#textDocument_completion()<CR>
+  nnoremap <leader>h :call LanguageClient#textDocument_hover()<CR>
+  nnoremap <leader>s :call LanguageClient_textDocument_documentSymbol()<CR>
+  nnoremap <leader>m :call LanguageClient_contextMenu()<CR>
+endfunction()
+
+augroup LSP
+  autocmd!
+  autocmd FileType cpp,c,rust call SetLSPShortcuts()
+augroup END
+
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" Or map each action separately
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
 " Theme
 syntax enable

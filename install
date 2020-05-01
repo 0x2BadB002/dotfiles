@@ -2,20 +2,60 @@
 
 set -e
 
-CONFIG="install.conf.yaml"
-DOTBOT_DIR="dotbot"
-
-DOTBOT_BIN="bin/dotbot"
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-cd "${BASEDIR}"
-git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
-git submodule update --init --recursive "${DOTBOT_DIR}"
-
-if [[ ! -f install_zsh.sh ]]; then
-    curl -Lo install_zsh.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
-    source install_zsh.sh
-    rm ~/.zshrc*
+if [ "$1" == "--debug" -o "$1" == "-d" ]; then
+    echo "Entering debug mode..."
+    DEBUG="1"
 fi
 
-"${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
+function fetch_updates() {
+    echo "Fetching the last updates..."
+    cd ${BASEDIR}
+    git pull origin master
+}
+
+function symlink_configs() {
+    echo "Starting creating symlinks..."
+    for i in $(ls "$BASEDIR/config/")
+    do
+        echo "Creating link $BASEDIR/config/$i to $HOME/.config/$i"
+        if [ "$DEBUG" != "1" ]; then
+            ln -s "$BASEDIR/config/$i" "$HOME/.config/$i"
+        fi
+    done
+    echo "Creating link $BASEDIR/zshrc to $HOME/.zshrc"
+    if [ "$DEBUG" != "1" ]; then
+        ln -s "$BASEDIR/zshrc" "$HOME/.zshrc"
+    fi
+    echo "Creating link $BASEDIR/doom.d to $HOME/.doom.d"
+    if [ "$DEBUG" != "1" ]; then
+        ln -s "$BASEDIR/doom.d" "$HOME/.doom.d"
+    fi
+}
+
+function install_oh_my_zsh() {
+    if [[ ! -f install_zsh.sh ]]; then
+        curl -Lo install_zsh.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+        source install_zsh.sh
+        rm ~/.zshrc*
+    fi
+}
+
+read -p "Do you want to install oh_my_zsh framework (y/n) " -n 1;
+echo ""
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    install_oh_my_zsh
+fi
+echo ""
+
+read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;
+echo ""
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    fetch_updates
+    echo ""
+    symlink_configs
+    echo ""
+fi
+
+echo "Success!"

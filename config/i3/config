@@ -1,0 +1,187 @@
+# >> General settings
+# ------------------------------ #
+# Set windows key as default for keybindings
+set $mod Mod4
+
+# Set default terminal
+set $terminal st
+
+# Font for window titles.
+font pango:System San Francisco Display 12
+
+# Window gaps
+gaps inner 3
+gaps outer 3
+
+# Disablig window titles
+for_window [class="^.*"] border pixel 0
+
+# Change container layout (stacked, tabbed, toggle split)
+bindsym $mod+q layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+# Commands to set Super_R to mod3
+# xmodmap -e 'remove Mod4 = Super_R'
+# xmodmap -e 'add Mod3 = Super_R'
+floating_modifier $mod
+# ------------------------------ #
+
+
+# >> Keybindings to manage i3wm
+# ------------------------------ #
+# Reload the configuration file
+bindsym $mod+Shift+e reload
+# Restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# Exit i3 (logs you out of your X session)
+bindsym $mod+Shift+q exec i3-msg exit
+# Lock i3
+bindsym $mod+Shift+p exec i3lock -e -c 000000
+# Scratchpad
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+# mouse button
+bindsym XF86Forward workspace next
+bindsym XF86Back workspace prev
+# ------------------------------ #
+
+
+# >> Keybindings for programs
+# ------------------------------ #
+# Terminal
+bindsym $mod+Return exec $terminal
+# Brouser
+bindsym $mod+b exec firefox
+# Skype
+bindsym $mod+m exec com.skype.Client
+# File brouser
+bindsym $mod+z exec $terminal -e "vifm"
+# Process viewer
+bindsym $mod+slash exec $terminal -e "htop"
+# Start rofi (a program launcher)
+bindsym $mod+d exec rofi -show
+# Telegram
+bindsym $mod+n exec telegram-desktop
+# Emacs
+bindsym $mod+v exec emacs
+# Calculator
+bindsym XF86Calculator exec gnome-calculator
+# ------------------------------ #
+
+
+# >> Windows manipulaton
+# ------------------------------ #
+# Kill focused window
+bindsym $mod+Shift+c kill
+
+# Change focus
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+
+# Move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# Resize focused window 
+bindsym $mod+Control+h resize shrink width 10 px or 10 ppt
+bindsym $mod+Control+j resize grow height 10 px or 10 ppt
+bindsym $mod+Control+k resize shrink height 10 px or 10 ppt
+bindsym $mod+Control+l resize grow width 10 px or 10 ppt
+
+# Split in horizontal orientation
+bindsym $mod+Shift+s split h
+
+# Split in vertical orientation
+bindsym $mod+s split v
+
+# Enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# bindsym $mod+g exec --no-startup-id "if [ `i3-msg -t get_tree | grep -Po \
+#          '.*\\"gaps\\":{\\"inner\\":\K(-|)[0-9]+(?=.*\\"focused\\":true)' -eq 0 ] then \
+#              i3-msg gaps inner current set 0 \
+#          else \
+#              i3-msg gaps inner current set 10 \
+#          fi"
+# ------------------------------ #
+
+
+# >> Pulse Audio controls
+# ------------------------------ #
+# Increase sound volume
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% 
+# Decrease sound volume
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+# Mute sound
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+# Start playing
+bindsym XF86AudioPlay exec --no-startup-id playerctl play
+bindsym XF86AudioPause exec --no-startup-id playerctl pause
+# Next track
+bindsym XF86AudioNext exec playerctl next
+# Previous track
+bindsym XF86AudioPrev exec playerctl previous
+# ------------------------------ #
+
+
+# >> Workspaces settings
+# ------------------------------ #
+# Define names for default workspaces
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# Switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+# ------------------------------ #
+
+
+# >> Other programs setup
+# ------------------------------ #
+# Start compton (window composer)
+exec --no-startup-id compton -b
+# Set wallpaper
+exec --no-startup-id nitrogen --restore
+# Start polybar (replace for i3 bar)
+exec --no-startup-id bash ~/.config/polybar/launch.sh
+# Start conky (system monitor)
+exec --no-startup-id conky -c ~/.conky/Gotham/Gotham
+# Start dunst (notification manager)
+exec --no-startup-id dunst > /dev/null &
+# Keyboard layout
+exec --no-startup-id setxkbmap us,ru -option 'grp:win_space_toggle'
+# ------------------------------ #

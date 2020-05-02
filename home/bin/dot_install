@@ -16,15 +16,6 @@ function make_link() {
     [ "$DEBUG" != "1" ] && ln -s "$BASEDIR/$1" "$HOME/$2"
 }
 
-function make_dir() {
-    if [[ -d "$HOME/$1" ]]; then
-        read -p "Directory $HOME/$1 exists. Do you want to overwrite it? (y/n) " -n 1;
-        echo ""
-        [[ $REPLY =~ ^[Yy]$ ]] && rm -rf "$HOME/$1" || return
-    fi
-    [ "$DEBUG" != "1" ] && mkdir "$HOME/$1"
-}
-
 function fetch_updates() {
     echo "Fetching the last updates..."
     cd "$BASEDIR"
@@ -33,24 +24,16 @@ function fetch_updates() {
 
 function symlink_configs() {
     echo "Starting creating symlinks..."
-    for i in $(ls "$BASEDIR/config/")
+    for i in $(ls "$BASEDIR/config")
     do
-        if [ -d "$BASEDIR/config/$i" ]; then
-            make_dir ".config/$i"
-            for j in $(ls "$BASEDIR/config/$i")
-            do
-                echo "Creating link $BASEDIR/config/$i/$j to $HOME/.config/$i/$j"
-                make_link "config/$i/$j" ".config/$i/$j"
-            done
-        else
-            echo "Creating link $BASEDIR/config/$i to $HOME/.config/$i"
-            make_link "config/$i" ".config/$i"
-        fi
+        echo "Creating link $BASEDIR/config/$i to $HOME/.config/$i"
+        make_link "config/$i" ".config/$i"
     done
-    echo "Creating link $BASEDIR/zshrc to $HOME/.zshrc"
-    make_link "zshrc" ".zshrc"
-    echo "Creating link $BASEDIR/doom.d to $HOME/.doom.d"
-    make_link "doom.d" ".doom.d"
+    for i in $(ls "$BASEDIR/home")
+    do
+        echo "Creating link $BASEDIR/home/$i to $HOME/.$i"
+        make_link "home/$i" ".$i"
+    done
 }
 
 function install_oh_my_zsh() {

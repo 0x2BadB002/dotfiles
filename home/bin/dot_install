@@ -1,0 +1,78 @@
+#!/usr/bin/env bash
+
+BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+if [ "$1" == "--debug" -o "$1" == "-d" ]; then
+    echo "Entering debug mode..."
+    DEBUG="1"
+fi
+
+function make_link() {
+    if [[ -e "$HOME/$2" ]]; then
+        read -p "File $HOME/$2 exists. Do you want to overwrite it? (y/n) " -n 1;
+        echo ""
+        [[ $REPLY =~ ^[Yy]$ ]] && rm -f "$HOME/$2" || return
+    fi
+    [ "$DEBUG" != "1" ] && ln -s "$BASEDIR/$1" "$HOME/$2"
+}
+
+function make_dir() {
+    if [[ -d "$HOME/$1" ]]; then
+        read -p "Directory $HOME/$1 exists. Do you want to overwrite it? (y/n) " -n 1;
+        echo ""
+        [[ $REPLY =~ ^[Yy]$ ]] && rm -rf "$HOME/$1" || return
+    fi
+    [ "$DEBUG" != "1" ] && mkdir "$HOME/$1"
+}
+
+function fetch_updates() {
+    echo "Fetching the last updates..."
+    cd "$BASEDIR"
+    git pull origin master
+}
+
+function symlink_configs() {
+    echo "Starting creating symlinks..."
+    for i in $(ls "$BASEDIR/config/")
+    do
+        if [ -d "$BASEDIR/config/$i" ]; then
+            make_dir ".config/$i"
+            for j in $(ls "$BASEDIR/config/$i")
+            do
+                echo "Creating link $BASEDIR/config/$i/$j to $HOME/.config/$i/$j"
+                make_link "config/$i/$j" ".config/$i/$j"
+            done
+        else
+            echo "Creating link $BASEDIR/config/$i to $HOME/.config/$i"
+            make_link "config/$i" ".config/$i"
+        fi
+    done
+    echo "Creating link $BASEDIR/zshrc to $HOME/.zshrc"
+    make_link "zshrc" ".zshrc"
+    echo "Creating link $BASEDIR/doom.d to $HOME/.doom.d"
+    make_link "doom.d" ".doom.d"
+}
+
+function install_oh_my_zsh() {
+    if [[ ! -f install_zsh.sh ]]; then
+        curl -Lo install_zsh.sh https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+        source install_zsh.sh
+        rm ~/.zshrc*
+    fi
+}
+
+read -p "Do you want to install oh_my_zsh framework (y/n) " -n 1;
+echo ""
+[[ $REPLY =~ ^[Yy]$ ]] && install_oh_my_zsh
+echo ""
+
+read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;
+echo ""
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+    fetch_updates
+    echo ""
+    symlink_configs
+    echo ""
+fi
+
+echo "Success!"

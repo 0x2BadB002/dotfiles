@@ -46,7 +46,7 @@ function install_oh_my_zsh() {
 
 read -p "Do you want to install oh_my_zsh framework (y/n) " -n 1;
 echo ""
-[[ $REPLY =~ ^[Yy]$ && "$DEBUG" == "1" ]] && install_oh_my_zsh
+[[ $REPLY =~ ^[Yy]$ && "$DEBUG" != "1" ]] && install_oh_my_zsh
 echo ""
 
 read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;

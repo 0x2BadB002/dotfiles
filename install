@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 if [ "$1" == "--debug" -o "$1" == "-d" ]; then
@@ -10,16 +8,26 @@ if [ "$1" == "--debug" -o "$1" == "-d" ]; then
 fi
 
 function make_link() {
+    if [[ -e "$HOME/$2" ]]; then
+        read -p "File $HOME/$2 exists. Do you want to overwrite it? (y/n) " -n 1;
+        echo ""
+        [[ $REPLY =~ ^[Yy]$ ]] && rm -f "$HOME/$2" || return
+    fi
     [ "$DEBUG" != "1" ] && ln -s "$BASEDIR/$1" "$HOME/$2"
 }
 
 function make_dir() {
+    if [[ -d "$HOME/$1" ]]; then
+        read -p "Directory $HOME/$1 exists. Do you want to overwrite it? (y/n) " -n 1;
+        echo ""
+        [[ $REPLY =~ ^[Yy]$ ]] && rm -rf "$HOME/$1" || return
+    fi
     [ "$DEBUG" != "1" ] && mkdir "$HOME/$1"
 }
 
 function fetch_updates() {
     echo "Fetching the last updates..."
-    cd ${BASEDIR}
+    cd "$BASEDIR"
     git pull origin master
 }
 
@@ -55,9 +63,7 @@ function install_oh_my_zsh() {
 
 read -p "Do you want to install oh_my_zsh framework (y/n) " -n 1;
 echo ""
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    install_oh_my_zsh
-fi
+[[ $REPLY =~ ^[Yy]$ ]] && install_oh_my_zsh
 echo ""
 
 read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;

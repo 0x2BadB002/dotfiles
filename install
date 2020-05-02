@@ -9,6 +9,14 @@ if [ "$1" == "--debug" -o "$1" == "-d" ]; then
     DEBUG="1"
 fi
 
+function make_link() {
+    [ "$DEBUG" != "1" ] && ln -s "$BASEDIR/$1" "$HOME/$2"
+}
+
+function make_dir() {
+    [ "$DEBUG" != "1" ] && mkdir "$HOME/$1"
+}
+
 function fetch_updates() {
     echo "Fetching the last updates..."
     cd ${BASEDIR}
@@ -19,19 +27,22 @@ function symlink_configs() {
     echo "Starting creating symlinks..."
     for i in $(ls "$BASEDIR/config/")
     do
-        echo "Creating link $BASEDIR/config/$i to $HOME/.config/$i"
-        if [ "$DEBUG" != "1" ]; then
-            ln -s "$BASEDIR/config/$i" "$HOME/.config/$i"
+        if [ -d "$BASEDIR/config/$i" ]; then
+            make_dir ".config/$i"
+            for j in $(ls "$BASEDIR/config/$i")
+            do
+                echo "Creating link $BASEDIR/config/$i/$j to $HOME/.config/$i/$j"
+                make_link "config/$i/$j" ".config/$i/$j"
+            done
+        else
+            echo "Creating link $BASEDIR/config/$i to $HOME/.config/$i"
+            make_link "config/$i" ".config/$i"
         fi
     done
     echo "Creating link $BASEDIR/zshrc to $HOME/.zshrc"
-    if [ "$DEBUG" != "1" ]; then
-        ln -s "$BASEDIR/zshrc" "$HOME/.zshrc"
-    fi
+    make_link "zshrc" ".zshrc"
     echo "Creating link $BASEDIR/doom.d to $HOME/.doom.d"
-    if [ "$DEBUG" != "1" ]; then
-        ln -s "$BASEDIR/doom.d" "$HOME/.doom.d"
-    fi
+    make_link "doom.d" ".doom.d"
 }
 
 function install_oh_my_zsh() {

@@ -29,14 +29,21 @@ else
 fi
 
 # Query amixer for the current volume and whether or not the speaker is muted
-volume="$( pactl list sinks | grep '^[[:space:]]Громкость:' | head -n 1 | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')"
-mute="$(pactl list sinks | grep '^[[:space:]]Звук выключен:' | sed 's/^[[:space:]]Звук выключен: //')"
-if [[ $volume == 0 || $mute == "да" ]]; then
+volume="$( pactl list sinks | grep '^[[:space:]]Volume:' | head -n 1 | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')"
+mute="$(pactl list sinks | grep '^[[:space:]]Mute:' | sed 's/^[[:space:]]Mute: //')"
+if [[ $volume == 0 || $mute == "yes" ]]; then
     # Show the sound muted notification
-    dunstify -a "changeVolume" -u low -i audio-volume-muted -r "$msgId" "Volume muted" 
+    dunstify -a "changeVolume" -u low -i "/usr/share/icons/ePapirus/48x48/status/notification-audio-volume-muted.svg" -r "$msgId" "Volume muted" 
 else
+    if [[ $volume > 50 ]]; then
+        volume_icon="/usr/share/icons/ePapirus/48x48/status/notification-audio-volume-high.svg"
+    elif [[ $volume > 25 ]]; then
+        volume_icon="/usr/share/icons/ePapirus/48x48/status/notification-audio-volume-medium.svg"
+    else
+        volume_icon="/usr/share/icons/ePapirus/48x48/status/notification-audio-volume-low.svg"
+    fi
     # Show the volume notification
-    dunstify -a "changeVolume" -u low -i audio-volume-high -r "$msgId" \
+    dunstify -a "changeVolume" -u low -i "$volume_icon" -r "$msgId" \
     "Volume: ${volume}%" "$(getProgressString 10 "<b> </b>" " " $volume)"
 fi
 

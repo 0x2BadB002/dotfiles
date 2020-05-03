@@ -2,23 +2,22 @@
 
 # Autostarts
 sxhkd &
+xfsettingsd &
 nitrogen --restore &
 ./.config/polybar/launch.sh &
 picom --experimental-backends &
 setxkbmap us,ru -option 'grp:win_space_toggle' &
-xsetroot -cursor_name left_ptr &
 dunst &
 nm-applet &
 udiskie --tray &
 redshift-gtk &
 gxkb &
-clipit &
-xfsettingsd &
+xsetroot -cursor_name left_ptr &
 
 # Workspaces setup
 bspc monitor -d 1 2 3 4 5 6 7 8 9 10
 
-bspc config border_width         2
+bspc config border_width         0
 
 bspc config split_ratio          0.50
 bspc config borderless_monocle   true

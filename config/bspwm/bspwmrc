@@ -9,7 +9,6 @@ picom --experimental-backends &
 setxkbmap us,ru -option 'grp:win_space_toggle' &
 dunst &
 nm-applet &
-udiskie --tray &
 redshift-gtk &
 gxkb &
 xsetroot -cursor_name left_ptr &
@@ -32,3 +31,6 @@ bspc config presel_feedback_color   "#5e81ac"
 bspc rule -a Emacs state=tiled
 bspc rule -a Skype state=floating
 bspc rule -a Qalculate-gtk state=floating
+
+xautolock -time 10 -locker "$HOME/.bin/lock.sh" \
+    -notify 30 -notifier "dunstify -t 28000 'Screen will be locked in 30 seconds...'"

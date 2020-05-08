@@ -39,12 +39,6 @@ function make_link() {
     [ "$DEBUG" != "1" ] && ln -s "$BASEDIR/$1" "$HOME/$2"
 }
 
-function fetch_updates() {
-    echo "Fetching the last updates..."
-    cd "$BASEDIR"
-    git pull origin master
-}
-
 function symlink_configs() {
     echo "Starting creating symlinks..."
     for i in $(ls "$BASEDIR/config")
@@ -61,8 +55,5 @@ function symlink_configs() {
  
 read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;
 echo ""
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    fetch_updates
-    symlink_configs
-fi
+[[ $REPLY =~ ^[Yy]$ ]] && symlink_configs
     

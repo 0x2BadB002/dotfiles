@@ -33,7 +33,7 @@ while true; do
     esac
 done
 
-image_name=$(echo $image_file | awk -F "/" '{print $NF}' | awk -F "." '{print $1}')
+image_name=$(printf "$image_file" | awk -F "/" '{print $NF}' | awk -F "." '{print $1}')
 
 [ -d "/tmp/lock.sh" ] || mkdir /tmp/lock.sh
 

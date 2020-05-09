@@ -7,23 +7,31 @@ main() {
     image_file=$(rg "file=" "$HOME/.config/nitrogen/bg-saved.cfg" | awk -F "=" '{print $2}')
     image_name=$(printf "$image_file" | awk -F "/" '{print $NF}' | awk -F "." '{print $1}')
 
+    local resolution
+
+    resolution=$(xrandr | rg "current" | awk -F "," '{print $2}' | awk '{printf $2} {printf "x"} {printf $4}')
+    
     [ -d "/tmp/lock.sh" ] || mkdir /tmp/lock.sh
     [ -f "/tmp/lock.sh/${image_name}.png" ] \
-        || convert -gaussian-blur 5x4 "$image_file" "/tmp/lock.sh/${image_name}.png"
+        || convert -scale ${resolution}\! -gaussian-blur 0x4 "$image_file" "/tmp/lock.sh/${image_name}.png"
 
     local color_bg color_fg color_blue
 
-    color_bg=$(awk '/^background/ {printf $2} END {print "FF"}' $HOME/.config/lock.d/colors)
-    color_fg=$(awk '/^foreground/ {printf $2} END {print "FF"}' $HOME/.config/lock.d/colors)
-    color_blue=$(awk '/^blue/ {printf $2} END {print "FF"}' $HOME/.config/lock.d/colors)
+    color_bg=$(awk '/^background/ {printf $2} END {printf "FF"}' $HOME/.config/lock.d/colors)
+    color_fg=$(awk '/^foreground/ {printf $2} END {printf "FF"}' $HOME/.config/lock.d/colors)
+    color_blue=$(awk '/^blue/ {printf $2} END {printf "FF"}' $HOME/.config/lock.d/colors)
 
-    [[ "$color_bg" == "FF" ]]   && error -i "using default background color \"FF\""
-    [[ "$color_fg" == "FF" ]]   && error -i "using default foreground color \"FF\""
-    [[ "$color_blue" == "FF" ]] && error -i  "using default blue color \"FF\""
+    local font xpos ypos
 
-    i3lock -ek --indpos="340:h-150" --image="/tmp/lock.sh/${image_name}.png" --timecolor "$color_fg" \
-        --datecolor "$color_fg" --time-font="Ubuntu Bold" --date-font="Ubuntu Bold" \
-        --radius 30 --veriftext="" --timepos="200:h-150" --ringcolor="$color_bg"
+    font="Ubuntu Medium"
+    xpos="200"
+    ypos=$(( $(echo $resolution | awk -F "x" '{printf $2}') - 200 ))
+
+    i3lock -ek --indpos="$(( $xpos + 540 )):$ypos" --image="/tmp/lock.sh/${image_name}.png" --timecolor "$color_fg" \
+        --datecolor "$color_fg" --time-font="$font" --date-font="$font" \
+        --radius 30 --veriftext="" --timepos="$xpos:$ypos" --ringcolor="$color_bg" \
+        --ringvercolor="$color_blue" --composite --timestr="%H:%M" --timesize=128 \
+        --time-align 1 --date-align 1 --datesize=48 --datepos="$xpos:$(( $ypos + 55 ))"
 }
 
 error() {
@@ -38,6 +46,7 @@ error() {
         -i ) echo "[ ${GREEN}INFO${NORMAL} ] $2" ;;
         -w ) echo "[ ${YELLOW}WARNING${NORMAL} ] $2" ;;
         -c ) echo "[ ${RED}CRITICAL${NORMAL} ] $2" ;;
+        *  ) exit 1 ;;
     esac
 }
 

@@ -23,10 +23,12 @@
     nord13: 			    #EBCB8B;
     nord14: 			    #A3BE8C;
     nord15: 			    #B48EAD;
-    accent:                      @nord9;
-    background:                  @nord0;
-    background-light:            @nord2;
-    background-focus:            @nord3;
-    foreground:                  @nord4;
-    foreground-list:             @nord6;
+    background:                  @nord1;
+    background-alt:              @nord1;
+    background-ib:               @nord0;
+    foreground:                  #D8DEE9FF;
+    border:                      #D8DEE94d;
+    border-sel:                  @nord10;
+    selected:                    @nord0;
+    urgent:                      @nord11;
 }

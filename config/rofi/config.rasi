@@ -1,6 +1,6 @@
 configuration                   {
 	modi:                       "drun";
-	columns:                    2;
+	columns:                    1;
   	icon-theme:         		"ePapirus";
 	show-icons:                 true;
 	terminal:                   "rofi-sensible-terminal";

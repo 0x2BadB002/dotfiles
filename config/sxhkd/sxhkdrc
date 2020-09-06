@@ -4,16 +4,18 @@
 
 # terminal emulator
 super + Return
-	kitty
+	alacritty
 
 # program launcher
 super + d
-	  rofi -no-lazy-grab -show drun -theme appsmenu.rasi
+	rofi -no-lazy-grab -show drun -theme dock.rasi
 
 # make sxhkd reload its configuration files:
 super + Escape
 	pkill -USR1 -x sxhkd
 
+super + Print
+	~/.config/dunst/screenshot.sh maim selectToFile
 #
 # bspwm hotkeys
 #
@@ -39,16 +41,18 @@ super + g
 	bspc node -s biggest
 
 #
-# state/flags
+# window state
 #
 
-# set the window state
-super + {t,shift + t,s,f}
-	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+# fullscreen
+super + f
+	bspc node -t '~fullscreen'
 
-# set the node flags
-super + ctrl + {m,x,y,z}
-	bspc node -g {marked,locked,sticky,private}
+# tiled / floating
+super + t
+	[ -z "$(bspc query -N -n focused.floating)" ] \
+	&& bspc node focused -t floating \
+	|| bspc node focused -t tiled
 
 #
 # focus/swap
@@ -63,12 +67,12 @@ super + {p,b,comma,period}
 	bspc node -f @{parent,brother,first,second}
 
 # focus the next/previous node in the current desktop
-super + {_,shift + }c
+super + {_,shift + }e
 	bspc node -f {next,prev}.local
 
 # focus the next/previous desktop in the current monitor
-super + bracket{left,right}
-	bspc desktop -f {prev,next}.local
+XF86{Forward,Back}
+	bspc desktop -f {next,prev}.local
 
 # focus the last node/desktop
 super + {grave,Tab}

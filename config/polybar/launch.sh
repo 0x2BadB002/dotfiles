@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Terminate already running bars
 killall -q polybar
@@ -7,5 +7,4 @@ killall -q polybar
 while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch Polybar
-polybar PolybarTop &
-polybar PolybarBot &
+polybar PolybarTop -r &

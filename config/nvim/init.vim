@@ -99,6 +99,10 @@ nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
+
+" Mouse support in alacritty
+set mouse=a
+
 " Theme
 syntax enable
 colorscheme nord

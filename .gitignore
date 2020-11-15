@@ -1,6 +1,5 @@
 install_zsh.sh
 config/broot/launcher
 config/nvim/bundle/
-home/doom.d/config.el
 config/vifm/vifminfo
 config/vifm/vifminfo.json

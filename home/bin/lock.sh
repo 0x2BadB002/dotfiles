@@ -5,7 +5,7 @@ main() {
     local image_file image_name
     
     image_file=$(rg "file=" "$HOME/.config/nitrogen/bg-saved.cfg" | awk -F "=" '{print $2}')
-    image_name=$(printf "$image_file" | awk -F "/" '{print $NF}' | awk -F "." '{print $1}')
+    image_name=$(printf '%s' "$image_file" | awk -F "/" '{print $NF}' | awk -F "." '{print $1}')
 
     local resolution
 
@@ -13,25 +13,25 @@ main() {
     
     [ -d "/tmp/lock.sh" ] || mkdir /tmp/lock.sh
     [ -f "/tmp/lock.sh/${image_name}.png" ] \
-        || convert -scale ${resolution}\! -gaussian-blur 0x4 "$image_file" "/tmp/lock.sh/${image_name}.png"
+        || convert -scale "${resolution}"\! -gaussian-blur 0x4 "$image_file" "/tmp/lock.sh/${image_name}.png"
 
     local color_bg color_fg color_blue
 
-    color_bg=$(awk '/^background/ {printf $2} END {printf "FF"}' $HOME/.config/lock.d/colors)
-    color_fg=$(awk '/^foreground/ {printf $2} END {printf "FF"}' $HOME/.config/lock.d/colors)
-    color_blue=$(awk '/^blue/ {printf $2} END {printf "FF"}' $HOME/.config/lock.d/colors)
+    color_bg=$(awk '/^background/ {printf $2} END {printf "FF"}' "$HOME"/.config/lock.d/colors)
+    color_fg=$(awk '/^foreground/ {printf $2} END {printf "FF"}' "$HOME"/.config/lock.d/colors)
+    color_blue=$(awk '/^blue/ {printf $2} END {printf "FF"}' "$HOME"/.config/lock.d/colors)
 
     local font xpos ypos
 
     font="Ubuntu Medium"
     xpos="200"
-    ypos=$(( $(echo $resolution | awk -F "x" '{printf $2}') - 200 ))
+    ypos=$(( $(echo "$resolution" | awk -F "x" '{printf $2}') - 200 ))
 
-    i3lock -ek --indpos="$(( $xpos + 540 )):$ypos" --image="/tmp/lock.sh/${image_name}.png" --timecolor "$color_fg" \
+    i3lock -ek --indpos="$(( xpos + 540 )):$ypos" --image="/tmp/lock.sh/${image_name}.png" --timecolor "$color_fg" \
         --datecolor "$color_fg" --time-font="$font" --date-font="$font" \
         --radius 30 --veriftext="" --timepos="$xpos:$ypos" --ringcolor="$color_bg" \
         --ringvercolor="$color_blue" --composite --timestr="%H:%M" --timesize=128 \
-        --time-align 1 --date-align 1 --datesize=48 --datepos="$xpos:$(( $ypos + 55 ))"
+        --time-align 1 --date-align 1 --datesize=48 --datepos="$xpos:$(( ypos + 55 ))"
 }
 
 error() {

@@ -32,7 +32,7 @@ done
    
 function make_link() {
     if [[ -e "$HOME/$2" ]]; then
-        read -p "File $HOME/$2 exists. Do you want to overwrite it? (y/n) " -n 1;
+        read -rp "File $HOME/$2 exists. Do you want to overwrite it? (y/n) " -n 1;
         echo ""
         [[ $REPLY =~ ^[Yy]$ ]] && rm -f "$HOME/$2" || return
     fi
@@ -41,19 +41,19 @@ function make_link() {
 
 function symlink_configs() {
     echo "Starting creating symlinks..."
-    for i in $(ls "$BASEDIR/config")
+    for i in "$BASEDIR"/config/*
     do
         echo "Creating link $BASEDIR/config/$i to $HOME/.config/$i"
         make_link "config/$i" ".config/$i"
     done
-    for i in $(ls "$BASEDIR/home")
+    for i in "$BASEDIR"/home/*
     do
         echo "Creating link $BASEDIR/home/$i to $HOME/.$i"
         make_link "home/$i" ".$i"
     done
 }
  
-read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;
+read -rp "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;
 echo ""
 [[ $REPLY =~ ^[Yy]$ ]] && symlink_configs
     

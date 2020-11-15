@@ -12,8 +12,8 @@ function launch_player() {
 
 function change_cover() {
     kitty @ send-text \
-	  --match title:cover \
-	  'clear && kitty icat --transfer-mode=stream /tmp/cover.png \r'
+        --match title:cover \
+        'clear && kitty icat --transfer-mode=stream /tmp/cover.png \r'
 }
 
 function extract_cover() {
@@ -23,12 +23,12 @@ function extract_cover() {
     cp "$music_dir/$(mpc --format %file% current)" "$temp_song"
 
     ffmpeg \
-	-hide_banner \
-	-loglevel 0 \
-	-y \
-	-i "$temp_song" \
-	-vf scale=400:-1 \
-	"/tmp/cover.png" > /dev/null 2>&1
+        -hide_banner \
+        -loglevel 0 \
+        -y \
+        -i "$temp_song" \
+        -vf scale=400:-1 \
+        "/tmp/cover.png" > /dev/null 2>&1
 
     convert /tmp/cover.png -resize 512x512 /tmp/resized.png
     rm "$temp_song"

@@ -3,33 +3,15 @@
 # If refreshing bspwm, remove all previous rules to prevent doubling up.
 bspc rule -r "*"
 
-run_cmd() {
-    program=$1
-    name=$(echo "$program" | awk '{printf $1}')
-    pgrep -u "$UID" -x "$name" > /dev/null || eval "$program"
-    [[ "$name" == "bash" ]] && eval "$program"
-}
-
 # Autostart
-(
-    run_cmd "sxhkd" &
-    run_cmd "xfsettingsd" &
-    run_cmd "xfce4-power-manager -no-daemon" &
-    run_cmd "xfce4-screensaver --no-daemon" &
-    run_cmd "nitrogen --restore" &
-    run_cmd "bash -c '~/.config/polybar/launch.sh'" &
-    run_cmd "picom --experimental-backends" &
-    run_cmd "setxkbmap us,ru -option 'grp:win_space_toggle'" &
-    run_cmd "dunst" &
-    run_cmd "nm-applet" &
-    run_cmd "redshift-gtk" &
-    run_cmd "gxkb" &
-    run_cmd "xsetroot -cursor_name left_ptr" &
-    run_cmd "volumeicon" &
-) 2> /tmp/autostart_bspwm_log
+bash -c '~/.config/bspwm/autostart.sh' 2> /tmp/autostart_bspwm_log &
+nitrogen --restore &
+xsetroot -cursor_name left_ptr &
+bash -c '~/.config/polybar/launch.sh' &
+setxkbmap us,ru -option 'grp:win_space_toggle' &
 
 # Workspaces setup
-bspc monitor -d 1 2 3 4 5
+bspc monitor -d 1 2 3 4 5 6
 
 bspc config border_width         0
 

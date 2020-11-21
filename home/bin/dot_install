@@ -1,59 +1,45 @@
 #!/usr/bin/env bash
 
-BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+SCRIPT_LOCATION="$(cd $(readlink "$(dirname "${BASH_SOURCE[0]}")") && pwd)"
+BASEDIR=${SCRIPT_LOCATION%/*/*}
 RED="$(tput setaf 1)"
 NORMAL="$(tput sgr0)"
 
-ARGS=$(getopt --options "dh" --longoptions "debug,help" --name "dot_install" -- "$@")
+main() {
+    [ -n "${DEBUG}" ] && printf "BASEDIR=${BASEDIR}\nSCRIPT_LOCATION=${SCRIPT_LOCATION}\n"
 
-if [ $? -ne 0 ]; then
-    exit 1
-fi
+    if [ -z "${DEBUG}" ]; then
+        read -rp "[${RED} WARNING${NORMAL} ] This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1; echo ""
+        [[ $REPLY =~ ^[Yy]$ ]] && symlink_configs
+    fi
+}
+   
+symlink_configs() {
+    echo "Starting creating symlinks..."
+    # TODO ссылки создаются без правильных имен
+    ln -sbiv "${BASEDIR}/home/"* "${HOME}/"
+    ln -sbiv "${BASEDIR}/config/"* "${HOME}/.config/"
+}
 
-eval set -- "$ARGS"
+[ $? -ne 0 ] && exit 1
+eval set -- "$(
+     getopt --name "dot_install" \
+         --options "dh" \
+         --longoptions "debug,help" \
+         -- "$@" \
+    || exit 98
+)"
 
 while true; do
     case "$1" in
-        -d|--debug)
-            shift
-            DEBUG="1"
-            ;;
-        -h|--help)
-            shift
-            echo "Help msg"
-            exit
-            ;;
-        --)
-            shift
-            break
-            ;;
+        -d|--debug) DEBUG="1" ;;
+        -h|--help)  echo "Help msg" ; exit ;;
+        --)         break ;;
     esac
+    shift
 done
-   
-function make_link() {
-    if [[ -e "$HOME/$2" ]]; then
-        read -rp "File $HOME/$2 exists. Do you want to overwrite it? (y/n) " -n 1;
-        echo ""
-        [[ $REPLY =~ ^[Yy]$ ]] && rm -f "$HOME/$2" || return
-    fi
-    [ "$DEBUG" != "1" ] && ln -s "$BASEDIR/$1" "$HOME/$2"
-}
 
-function symlink_configs() {
-    echo "Starting creating symlinks..."
-    for i in "$BASEDIR"/config/*
-    do
-        echo "Creating link $BASEDIR/config/$i to $HOME/.config/$i"
-        make_link "config/$i" ".config/$i"
-    done
-    for i in "$BASEDIR"/home/*
-    do
-        echo "Creating link $BASEDIR/home/$i to $HOME/.$i"
-        make_link "home/$i" ".$i"
-    done
-}
- 
-read -rp "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1;
-echo ""
-[[ $REPLY =~ ^[Yy]$ ]] && symlink_configs
-    
+[[ ${__lastarg:="${!#:-}"} =~ ^--$|${0}$ ]] \
+  && __lastarg="" 
+
+main "${@:-}"

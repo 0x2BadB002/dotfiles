@@ -8,7 +8,11 @@ super + Return
 
 # program launcher
 super + d
-	rofi -no-lazy-grab -show drun -theme dock.rasi
+	rofi -no-lazy-grab -show drun -modi drun -theme dock.rasi
+
+# run prompt
+super + r
+	rofi -no-lazy-grab -show run -modi run -theme run.rasi
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -25,20 +29,8 @@ super + alt + {q,r}
 	{bspc quit,bspc wm -r}
 
 # close and kill
-super + shift + c
+super + q
 	bspc node -c
-
-# alternate between the tiled and monocle layout
-super + m
-	bspc desktop -l next
-
-# send the newest marked node to the newest preselected node
-super + y
-	bspc node newest.marked.local -n newest.!automatic.local
-
-# swap the current node and the biggest node
-super + g
-	bspc node -s biggest
 
 #
 # window state
@@ -62,24 +54,16 @@ super + t
 super + {_,shift + }{h,j,k,l}
 	bspc node -{f,s} {west,south,north,east}
 
-# focus the node for the given path jump
-super + {p,b,comma,period}
-	bspc node -f @{parent,brother,first,second}
-
-# focus the next/previous node in the current desktop
-super + {_,shift + }e
-	bspc node -f {next,prev}.local
-
-# focus the next/previous desktop in the current monitor
-XF86{Forward,Back}
-	bspc desktop -f {next,prev}.local
+# focus the parent node
+super + p
+	bspc node -f @parent
 
 # focus the last node/desktop
 super + {grave,Tab}
 	bspc {node,desktop} -f last
 
 # focus the older or newer node in the focus history
-super + {o,i}
+XF86{Forward,Back}
 	bspc wm -h off; \
 	bspc node {older,newer} -f; \
 	bspc wm -h on
@@ -127,15 +111,37 @@ super + {Left,Down,Up,Right}
 #
 # pass-rofi
 #
-super + shift + p
+super + x
 	rofi-pass
 
 #
 # program launchers
 #
 
-super + x ; {1,2}
-	{firefox, emacs}
+super + b
+	firefox
+
+super + v
+	alacritty -e 'vifm'
+
+super + ctrl + v
+	emacsclient -c -a 'emacs' --eval '(dired nil)'
+
+super + slash
+	alacritty -e 'htop'  
+
+#
+# Emacs launchers
+#
+
+super + c
+	emacsclient -c -a 'emacs'
+
+super + ctrl + c
+	emacsclient -c -a 'emacs' --eval '(ibuffer)'
+
+super + ctrl + Return
+	emacsclient -c -a 'emacs' --eval '(+eshell/frame)'
 
 #
 # media keys

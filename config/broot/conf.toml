@@ -19,6 +19,7 @@
 # A popular flag is the `g` one which displays git related info.
 #
 default_flags = ""
+icon_theme = "vscode"
 
 ###############################################################
 # Verbs and shortcuts
@@ -115,11 +116,23 @@ exe = "rgb(143, 188, 187) none"
 link = "rgb(136, 192, 208) none"
 pruning = "rgb(76, 86, 106) none Italic"
 perm__ = "gray(5) None"
-perm_r = "ansi(94) None"
-perm_w = "ansi(132) None"
-perm_x = "ansi(65) None"
+perm_r = "None None"
+perm_w = "None None"
+perm_x = "None None"
 owner = "gray(12) none"
 group = "gray(12) none"
+sparse = "none none"                    
+# TODO 
+git_branch = "rgb(147, 161, 161) none"   
+git_insertions = "rgb(133, 153, 0) none"  
+git_deletions = "rgb(211, 1, 2) none"      
+git_status_current = "none none"            
+git_status_modified = "rgb(181, 137, 0) none"
+git_status_new = "rgb(133, 153, 0) none"    
+git_status_ignored = "rgb(88, 110, 117) none"
+git_status_conflicted = "rgb(211, 1, 2) none" 
+git_status_other = "rgb(211, 1, 2) none"
+# ----------------------------#
 selected_line = "none rgb(59, 66, 82)"
 char_match = "rgb(235, 103, 139) none"
 file_error = "rgb(191, 97, 106) none"
@@ -140,6 +153,7 @@ help_bold = "rgb(129, 161, 193) none bold"
 help_italic = "rgb(129, 161, 193) none italic"
 help_code = "rgb(143, 188, 187) none"
 help_headers = "rgb(163, 190, 140) none"
+help_table_border = "none none"
 
 # You may find other skins on
 #  https://dystroy.org/broot/documentation/configuration/#colors

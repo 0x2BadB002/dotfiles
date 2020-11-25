@@ -14,7 +14,7 @@
   '(font-lock-comment-face :slant italic)
   '(font-lock-keyword-face :slant italic))
 
-(setq doom-theme 'doom-solarized-dark)
+(setq doom-theme 'doom-nord)
 
 (setq org-directory "~/org/")
 

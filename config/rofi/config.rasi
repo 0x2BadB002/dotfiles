@@ -27,7 +27,7 @@ configuration                   {
 	kb-remove-word-back:        "Control+Alt+h,Control+BackSpace";
 	kb-remove-word-forward:     "Control+Alt+d";
 	kb-remove-char-forward:     "Delete,Control+d";
-	kb-remove-char-back:        "BackSpace,Control+h";
+	kb-remove-char-back:        "BackSpace";
 	kb-remove-to-eol:           "Control+n";
 	kb-remove-to-sol:           "Control+u";
 	kb-accept-entry:            "Control+p,Control+m,Return,KP_Enter";
@@ -36,8 +36,8 @@ configuration                   {
 	kb-delete-entry:            "Shift+Delete";
 	kb-mode-next:               "Shift+Right,Control+Tab";
 	kb-mode-previous:           "Shift+Left,Control+ISO_Left_Tab";
-	kb-row-left:                "Control+Page_Up";
-	kb-row-right:               "Control+Page_Down";
+	kb-row-left:                "Control+h";
+	kb-row-right:               "Control+l";
 	kb-row-up:                  "Up,Control+k,ISO_Left_Tab";
 	kb-row-down:                "Down,Control+j";
 	kb-row-tab:                 "Tab";

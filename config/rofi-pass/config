@@ -1,0 +1,55 @@
+_rofi () {
+    rofi -no-lazy-grab -theme $HOME/.config/rofi/run.rasi -i -no-auto-select "$@"
+}
+
+_pwgen () {
+	pwgen -y "$@"
+}
+
+_image_viewer () {
+    sxiv -
+}
+
+fix_layout=false
+layout_cmd () {
+  setxkbmap us
+}
+
+URL_field='url'
+USERNAME_field='user'
+AUTOTYPE_field='autotype'
+
+# delay to be used for :delay keyword
+delay=2
+
+# rofi-pass needs to close itself before it can type passwords. Set delay here.
+wait=0.2
+
+# delay between keypresses when typing (in ms)
+xdotool_delay=12
+
+## Programs to be used
+# Editor
+EDITOR='alacritty -e nvim'
+
+# Browser
+BROWSER='xdg-open'
+
+## Misc settings
+
+default_do='menu' # menu, autotype, copyPass, typeUser, typePass, copyUser, copyUrl, viewEntry, typeMenu, actionMenu, copyMenu, openUrl
+auto_enter='false'
+notify='false'
+default_autotype='user :tab pass'
+
+# Clipboard settings
+# Possible options: primary, clipboard, both
+clip=clipboard
+
+# Seconds before clearing pass from clipboard 
+clip_clear=45
+
+## Options for generating new password entries
+
+# open new password entries in editor
+edit_new_pass="true"

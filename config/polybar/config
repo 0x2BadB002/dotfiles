@@ -1,15 +1,20 @@
 [colors]
-background = #2E3440
-foreground = #D8DEE9
-black      = #4C566A
-red        = #BF616A
-green      = #A3BE8C
-yellow     = #EBCB8B
-blue       = #5E81AC
-magenta    = #B48EAD
-cyan       = #8FBCBB
-white      = #D8DEE9
-orange     = #D08770
+nord0 = #2E3440
+nord1 = #3B4252
+nord2 = #434C5E
+nord3 = #4C566A
+nord4 = #D8DEE9
+nord5 = #E5E9F0
+nord6 = #ECEFF4
+nord7 = #8FBCBB
+nord8 = #88C0D0
+nord9 = #81A1C1
+nord10 = #5E81AC
+nord11 = #BF616A
+nord12 = #D08770
+nord13 = #EBCB8B
+nord14 = #A3BE8C
+nord15 = #B48EAD
 
 ;------------;
 ; TOPBAR    ;
@@ -17,8 +22,8 @@ orange     = #D08770
 
 [bar/PolybarTop]
 
-background = ${colors.background}
-foreground = ${colors.foreground}
+background = ${colors.nord0}
+foreground = ${colors.nord4}
 
 width = 100%
 height = 28
@@ -39,20 +44,16 @@ font-3 = "Font Awesome 5 Brands:pixelsize=13;3"
 ;---------------;
 
 fixed-center = true
-padding-left = 2
-padding-right = 2
-
-module-margin = 2
 
 modules-left = bspwm
 modules-center = xwindow
-modules-right = date
+modules-right = pulseaudio date time 
 
 tray-position = right
 tray-padding = 10
 tray-detached = true
-tray-background = ${colors.background}
-tray-offset-x = -4%
+tray-background = ${colors.nord0}
+tray-offset-x = -14%
 tray-maxsize = 24
 
 wm-restack = bspwm
@@ -75,9 +76,9 @@ type = internal/bspwm
 ws-icon-0 = 1;
 ws-icon-1 = 2;
 ws-icon-2 = 3;
-ws-icon-3 = 4;
+ws-icon-3 = 4;
 ws-icon-4 = 5;
-ws-icon-5 = 6;
+ws-icon-5 = 6;
 
 ; Mouse click
 enable-click = true
@@ -88,66 +89,105 @@ reverse-scroll = false
 
 format = <label-state> <label-mode>
 
-; Dimmed label
-label-dimmed         = %icon%
-label-dimmed-padding = 2
-
 ; Focused label
 label-focused            = %icon%
 label-focused-padding    = 2
-label-focused-foreground = ${colors.blue}
-label-focused-underline  = ${colors.blue}
+label-focused-foreground = ${colors.nord10}
 
 ; Occupied label
-label-occupied            = %icon%
-label-occupied-padding    = 2
-label-occupied-foreground = ${colors.green}
+label-occupied = %icon%
+label-occupied-foreground = ${colors.nord0}
+label-occupied-background = ${colors.nord8}
+label-occupied-padding = 2
+
+; Focused occupied label
+label-focused-occupied = %icon%
+label-focused-occupied-foreground = ${colors.nord0}
+label-focused-occupied-background = ${colors.nord7}
+label-focused-occupied-padding = 2
 
 ; Empty labels
-label-empty            = %icon%
-label-empty-padding    = 2
+label-empty = %icon%
+label-empty-foreground = ${colors.nord0}
+label-empty-background = ${colors.nord9}
+label-empty-padding = 2
+
+; Focused empty label
+label-focused-empty = %icon%
+label-focused-empty-foreground = ${colors.nord0}
+label-focused-empty-background = ${colors.nord7}
+label-focused-empty-padding = 2
 
 ; Urgent labels
-label-urgent            = %icon%
-label-urgent-padding    = 2
-label-urgent-foreground = ${colors.red}
+label-urgent = %icon% 
+label-urgent-foreground = ${colors.nord0}
+label-urgent-background = ${colors.nord13}
+label-urgent-padding = 2
 
 label-monocle                   = "  "
-label-monocle-foreground        = ${colors.cyan}
+label-monocle-foreground        = ${colors.nord7}
 label-tiled                     = "  "
-label-tiled-foreground          = ${colors.cyan}
+label-tiled-foreground          = ${colors.nord7}
 label-fullscreen                = "  "
-label-fullscreen-foreground     = ${colors.cyan}
+label-fullscreen-foreground     = ${colors.nord7}
 label-floating                  = "  "
-label-floating-foreground       = ${colors.cyan}
+label-floating-foreground       = ${colors.nord7}
 label-pseudotiled               = "  "
-label-pseudotiled-foreground    = ${colors.cyan}
+label-pseudotiled-foreground    = ${colors.nord7}
 label-locked                    = "  "
-label-locked-foreground         = ${colors.cyan}
+label-locked-foreground         = ${colors.nord7}
 label-sticky                    = "  "
-label-sticky-foreground         = ${colors.cyan}
+label-sticky-foreground         = ${colors.nord7}
 label-private                   =  "     "
-label-private-foreground        = ${colors.cyan}
+label-private-foreground        = ${colors.nord7}
+
+label-separator = " "
+label-separator-background = ${colors.nord10}
 
 [module/date]
 type = internal/date
-interval = 5
 
+interval = 60
+
+date = %a %d
+
+label = " %date%"
+format-foreground = ${colors.nord0}
+format-background = ${colors.nord10}
+format-padding = 2
+
+[module/time]
+type = internal/date
 time = %H:%M
 
-format-prefix = 
+label = " %time%"
 
-label = %time:6%
+format-foreground = ${colors.nord0}
+format-background = ${colors.nord15}
+format-padding = 2
 
 [module/pulseaudio]
 type = internal/pulseaudio
+sink = alsa_output.pci-0000_00_1f.3.analog-stereo
 
-format-volume = <ramp-volume>
+format-volume = <ramp-volume> <label-volume>
+format-volume-padding = 2
 
-ramp-volume-0 = 
-ramp-volume-1 = 
+label-volume = "%percentage%%"
+label-volume-minlen = 6
 
-label-muted = 
+label-muted = " Mute"
+label-muted-minlen = 6
+label-muted-padding = 2
+
+format-volume-foreground = ${colors.nord0}
+format-volume-background = ${colors.nord13}
+format-muted-foreground = ${colors.nord0}
+format-muted-background = ${colors.nord13}
+
+ramp-volume-minlen = 3
+ramp-volume-0 = ""
+ramp-volume-1 = ""
 
 [settings]
 screenchange-reload = true

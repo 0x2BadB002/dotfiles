@@ -1,6 +1,16 @@
 #!/usr/bin/env bash
 
-function getProgressString {
+# Arbitrary but unique message id
+msg_id="991049"
+operation="$1"
+theme="ePapirus"
+
+icon_muted="/usr/share/icons/${theme}/48x48/status/notification-audio-volume-muted.svg"
+icon_low="/usr/share/icons/${theme}/48x48/status/notification-audio-volume-low.svg"
+icon_medium="/usr/share/icons/${theme}/48x48/status/notification-audio-volume-medium.svg"
+icon_high="/usr/share/icons/${theme}/48x48/status/notification-audio-volume-high.svg"
+
+function get_progress_string {
     ITEMS="$1" # The total number of items(the width of the bar)
     FILLED_ITEM="$2" # The look of a filled item 
     NOT_FILLED_ITEM="$3" # The look of a not filled item
@@ -17,34 +27,39 @@ function getProgressString {
     echo "$msg"
 }
 
-# Arbitrary but unique message id
-msgId="991049"
+function get_alsa_volume {
+    local str volume
+    # Query amixer for the current volume and whether or not the speaker is muted
+    str="$(amixer get Master | tail -n 1)"
+    volume=$(printf '%s' "$str" | awk '/Right:/ {print substr($NF, 2, length($NF)-2)}')
+    [[ "$volume" == "on" ]] && volume=$(printf '%s' "$str" | awk -F 'Right:|[][]' 'BEGIN {RS=""}{ print $3 }')
+    echo "${volume%\%}"
+}
 
 # Change the volume
-
-if [[ $1 == "toggle" ]]; then
-    pactl set-sink-mute 0 toggle > /dev/null
+if [[ "$operation" == "toggle" ]]; then
+    amixer sset Master toggle > /dev/null
 else
-    pactl set-sink-volume 0 "$1" > /dev/null
+    amixer sset Master "$operation" > /dev/null
 fi
 
-# Query amixer for the current volume and whether or not the speaker is muted
-volume="$( pactl list sinks | grep '^[[:space:]]Volume:' | head -n 1 | tail -n 1 | sed -e 's,.* \([0-9][0-9]*\)%.*,\1,')"
-mute="$(pactl list sinks | grep '^[[:space:]]Mute:' | sed 's/^[[:space:]]Mute: //')"
-if [[ $volume == 0 || $mute == "yes" ]]; then
+# Get volume
+volume=$(get_alsa_volume)
+
+if [[ "$volume" == "off" ]]; then
     # Show the sound muted notification
-    dunstify -a "changeVolume" -u low -i "/usr/share/icons/ePapirus/48x48/status/notification-audio-volume-muted.svg" -r "$msgId" "Volume muted" 
+    dunstify -a "changeVolume" -u low -i "$icon_muted" -r "$msg_id" "Volume muted" 
 else
-    if [[ $volume > 50 ]]; then
-        volume_icon="/usr/share/icons/ePapirus/48x48/status/notification-audio-volume-high.svg"
-    elif [[ $volume > 25 ]]; then
-        volume_icon="/usr/share/icons/ePapirus/48x48/status/notification-audio-volume-medium.svg"
+    if (( volume >= 50 )); then
+        volume_icon="$icon_high"
+    elif (( volume >= 25 )); then
+        volume_icon="$icon_medium"
     else
-        volume_icon="/usr/share/icons/ePapirus/48x48/status/notification-audio-volume-low.svg"
+        volume_icon="$icon_low"
     fi
     # Show the volume notification
-    dunstify -a "changeVolume" -u low -i "$volume_icon" -r "$msgId" \
-    "Volume: ${volume}%" "$(getProgressString 10 "<b> </b>" " " $volume)"
+    dunstify -a "changeVolume" -u low -i "$volume_icon" -r "$msg_id" \
+    "Volume: ${volume}%" "$(get_progress_string 10 "<b> </b>" " " "${volume%\%}")"
 fi
 
 # Play the volume changed sound

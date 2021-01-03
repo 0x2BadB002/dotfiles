@@ -1,17 +1,17 @@
 Dotfiles
 =================
 
-| Program              | Name                |
-|----------------------|---------------------|
-| Window manager       | `bspwm`             |
-| Window Compositor    | `picom`             |
-| Notification daemon  | `dunst`             |
-| Terminal             | `kitty`             |
-| Shell                | `zsh`,`oh-my-zsh`   |
-| Application launcher | `rofi`              |
-| Music player         | `mpd`, `ncmpcpp`    |
-| Editor               | `nvim`,`doom emacs` |
-| File manager         | `vifm`              |
+| Program              | Name                  |
+|----------------------|-----------------------|
+| Window manager       | `bspwm`               |
+| Window Compositor    | `picom`               |
+| Notification daemon  | `dunst`               |
+| Terminal             | `alacritty`           |
+| Shell                | `zsh`,`oh-my-zsh`     |
+| Application launcher | `rofi`                |
+| Music player         | `mpd`, `ncmpcpp`      |
+| Editor               | `neovim`,`doom emacs` |
+| File manager         | `vifm`                |
 
 Screenshots
 -----------------

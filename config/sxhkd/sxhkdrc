@@ -109,6 +109,16 @@ super + {Left,Down,Up,Right}
 	bspc node -v {-20 0,0 20,0 -20,20 0}
 
 #
+# window gaps increase/decrease
+#
+
+super + bracketleft
+	[[ $(bspc config window_gap) -lt 200 ]] && bspc config window_gap $(( $(bspc config window_gap) + 10 ))
+
+super + bracketright
+	[[ $(bspc config window_gap) -gt 0 ]] && bspc config window_gap $(( $(bspc config window_gap) - 10 ))
+
+#
 # pass-rofi
 #
 super + x
@@ -148,10 +158,10 @@ super + ctrl + Return
 #
 
 XF86AudioRaiseVolume
-	~/.bin/change_volume.sh +5%
+	~/.bin/change_volume.sh 5%+
 
 XF86AudioLowerVolume
-	~/.bin/change_volume.sh -5%
+	~/.bin/change_volume.sh 5%-
 
 XF86AudioPlay
 	mpc toggle

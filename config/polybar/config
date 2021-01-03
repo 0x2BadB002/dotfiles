@@ -34,7 +34,7 @@ bottom = false
 ; FONTS ;
 ;-------;
 
-font-0 = "Inter:style=Medium:size=13:antialias=true;3"
+font-0 = "Inter:style=Bold:size=13:antialias=true;3"
 font-1 = "Font Awesome 5 Free:style=Solid:pixelsize=13;3"
 font-2 = "Font Awesome 5 Free:style=Regular:pixelsize=13;3"
 font-3 = "Font Awesome 5 Brands:pixelsize=13;3"
@@ -47,7 +47,7 @@ fixed-center = true
 
 modules-left = bspwm
 modules-center = xwindow
-modules-right = pulseaudio date time 
+modules-right = alsa date time 
 
 tray-position = right
 tray-padding = 10
@@ -166,15 +166,14 @@ format-foreground = ${colors.nord0}
 format-background = ${colors.nord15}
 format-padding = 2
 
-[module/pulseaudio]
-type = internal/pulseaudio
-sink = alsa_output.pci-0000_00_1f.3.analog-stereo
+[module/alsa]
+type = internal/alsa
 
 format-volume = <ramp-volume> <label-volume>
 format-volume-padding = 2
 
-label-volume = "%percentage%%"
-label-volume-minlen = 6
+label-volume = "%percentage:2%%"
+label-volume-minlen = 3
 
 label-muted = " Mute"
 label-muted-minlen = 6
@@ -185,7 +184,6 @@ format-volume-background = ${colors.nord13}
 format-muted-foreground = ${colors.nord0}
 format-muted-background = ${colors.nord13}
 
-ramp-volume-minlen = 3
 ramp-volume-0 = ""
 ramp-volume-1 = ""
 

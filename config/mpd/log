@@ -1597,3 +1597,40 @@ Mar 20 19:31 : exception: OutputThread could not get realtime scheduling, contin
 Mar 20 23:35 : player: played "Hate Me.mp3"
 Mar 21 16:17 : exception: RTIOThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
 Mar 21 16:17 : exception: OutputThread could not get realtime scheduling, continuing anyway: sched_setscheduler failed: Operation not permitted
+Jan 23 15:42 : update: added /Hollywood#Undead#-#Heart#Of#A#Champion.mp3_new.mp3
+Jan 23 15:42 : update: added /Sworn Through Swords.mp3
+Jan 23 15:42 : update: added /Devil Trigger.mp3
+Jan 23 15:42 : update: added /Lock & Load.mp3
+Jan 23 15:44 : update: updating /Hollywood#Undead#-#Heart#Of#A#Champion.mp3_new.mp3
+Jan 23 15:44 : update: updating /Sworn Through Swords.mp3
+Jan 23 15:44 : update: updating /Devil Trigger.mp3
+Jan 23 15:44 : update: updating /Lock & Load.mp3
+Jan 23 15:45 : exception: Bad song index
+Jan 23 15:45 : exception: Bad song index
+Jan 23 16:09 : player: played "Devil Trigger.mp3"
+Jan 23 16:14 : player: played "Lock & Load.mp3"
+Jan 23 16:51 : player: played "Hollywood#Undead#-#Heart#Of#A#Champion.mp3_new.mp3"
+Jan 23 22:27 : player: played "Devil Trigger.mp3"
+Jan 24 21:25 : player: played "Devil Trigger.mp3"
+Jan 24 21:37 : player: played "Devil Trigger.mp3"
+Jan 24 23:42 : player: played "Devil Trigger.mp3"
+Jan 25 23:28 : player: played "Devil Trigger.mp3"
+Jan 26 21:28 : player: played "Devil Trigger.mp3"
+Jan 27 22:04 : player: played "Devil Trigger.mp3"
+Jan 28 22:01 : player: played "Devil Trigger.mp3"
+Jan 29 22:27 : player: played "Devil Trigger.mp3"
+Jan 31 13:24 : player: played "Devil Trigger.mp3"
+Jan 31 22:01 : player: played "Devil Trigger.mp3"
+Feb 01 12:45 : player: played "Devil Trigger.mp3"
+Feb 01 22:06 : player: played "Devil Trigger.mp3"
+Feb 02 12:45 : player: played "Devil Trigger.mp3"
+Feb 02 21:52 : player: played "Devil Trigger.mp3"
+Feb 03 12:19 : player: played "Devil Trigger.mp3"
+Feb 03 21:02 : player: played "Devil Trigger.mp3"
+Feb 04 14:25 : player: played "Devil Trigger.mp3"
+Feb 04 21:48 : player: played "Devil Trigger.mp3"
+Feb 04 22:08 : player: played "Devil Trigger.mp3"
+Feb 05 13:05 : player: played "Devil Trigger.mp3"
+Feb 05 14:26 : player: played "Devil Trigger.mp3"
+Feb 05 15:24 : player: played "Devil Trigger.mp3"
+Feb 05 22:16 : player: played "Devil Trigger.mp3"

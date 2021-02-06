@@ -5,9 +5,9 @@ bspc rule -r "*"
 
 # Autostart
 nitrogen --restore &
-bash -c '~/.config/polybar/launch.sh' &
 xsetroot -cursor_name left_ptr &
 setxkbmap us,ru -option 'grp:win_space_toggle' &
+(sleep 2s && bash -c '~/.config/polybar/launch.sh' 2> /tmp/bspwm_log > /tmp/bspwm_log) &
 
 daemonize() {
     program=$1
@@ -22,7 +22,7 @@ daemonize "xfce4-screensaver" &
 daemonize "picom --experimental-backends" &
 daemonize "dunst" &
 daemonize "nm-applet" &
-daemonize "redshift-gtk" &
+daemonize "redshift-gtk -l 59:30" &
 daemonize "gxkb" &
 daemonize "emacs --fg-daemon" &
 

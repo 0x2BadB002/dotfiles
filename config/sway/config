@@ -48,7 +48,7 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 # >> Keybindings to manage i3wm
 # ------------------------------ #
 # Reload the configuration file
-bindsym $mod+Shift+e exec 'bash ~/.config/sway/scripts/restart_wm.sh'
+bindsym $mod+Shift+e reload
 # Exit i3 (logs you out of your X session)
 bindsym $mod+Shift+q exec nwgbar
 # Lock i3
@@ -127,14 +127,14 @@ bindsym $mod+f fullscreen toggle
 # ------------------------------ #
 
 
-# >> Pulse Audio controls
+# >> Audio controls
 # ------------------------------ #
 # Increase sound volume
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% 
+bindsym XF86AudioRaiseVolume exec --no-startup-id bash ~/.local/bin/change_volume.sh 5%+ 
 # Decrease sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+bindsym XF86AudioLowerVolume exec --no-startup-id bash ~/.local/bin/change_volume.sh 5%-
 # Mute sound
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+bindsym XF86AudioMute exec --no-startup-id bash ~/.local/bin/change_volume.sh toggle
 # Start playing
 bindsym XF86AudioPlay exec --no-startup-id playerctl play
 bindsym XF86AudioPause exec --no-startup-id playerctl pause
@@ -144,6 +144,13 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 # ------------------------------ #
 
+# >> Audio controls
+# ------------------------------ #
+bindsym {
+    XF86MonBrightnessDown exec brightnessctl set 5%-
+    XF86MonBrightnessUp exec brightnessctl set +5%
+}
+# ------------------------------ #
 
 # >> Workspaces settings
 # ------------------------------ #
@@ -188,7 +195,7 @@ bindsym $mod+Shift+0 move container to workspace $ws10
 # >> Other programs setup
 # ------------------------------ #
 # Set wallpaper
-output eDP-1 bg ~/Pictures/wallpapers/0078.jpg fill
+output eDP-1 bg ~/Pictures/wallpapers/005.jpg fill
 # Start waybar
 exec --no-startup-id "waybar --config ~/.config/sway/waybar.conf --style ~/.config/sway/waybar_style.css"
 # Start gammastep (redshift for wayland)

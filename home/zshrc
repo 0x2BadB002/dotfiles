@@ -90,8 +90,6 @@ else
   export EDITOR='mvim'
 fi
 
-export PATH="$HOME/.bin:$PATH"
-
 test -r "~/.dir_colors" && eval $(dircolors ~/.dir_colors)
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source /home/pavel/.config/broot/launcher/bash/br

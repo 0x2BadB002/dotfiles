@@ -48,7 +48,7 @@ volume=$(get_alsa_volume)
 
 if [[ "$volume" == "off" ]]; then
     # Show the sound muted notification
-    dunstify -a "changeVolume" -u low -i "$icon_muted" -r "$msg_id" "Volume muted" 
+    [ "$XDG_SESSION_TYPE" == "wayland" ] || dunstify -a "changeVolume" -u low -i "$icon_muted" -r "$msg_id" "Volume muted" 
 else
     if (( volume >= 50 )); then
         volume_icon="$icon_high"
@@ -58,9 +58,10 @@ else
         volume_icon="$icon_low"
     fi
     # Show the volume notification
-    dunstify -a "changeVolume" -u low -i "$volume_icon" -r "$msg_id" \
-    "Volume: ${volume}%" "$(get_progress_string 10 "<b> </b>" " " "${volume%\%}")"
-fi
+    [ "$XDG_SESSION_TYPE" == "wayland" ] || \
+	dunstify -a "changeVolume" -u low -i "$volume_icon" -r "$msg_id" \
+    	"Volume: ${volume}%" "$(get_progress_string 10 "<b> </b>" " " "${volume%\%}")"
 
-# Play the volume changed sound
-canberra-gtk-play -i audio-volume-change -d "changeVolume"
+    # Play the volume changed sound
+    canberra-gtk-play -i audio-volume-change -d "changeVolume"
+fi

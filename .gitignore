@@ -3,3 +3,7 @@ config/broot/launcher
 config/nvim/bundle/
 config/vifm/vifminfo
 config/vifm/vifminfo.json
+config/mpd/log
+config/mpd/pid
+config/mpd/database
+config/mpd/state

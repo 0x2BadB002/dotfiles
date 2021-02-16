@@ -3,8 +3,8 @@
 (setq user-full-name "Kovalev Pavel"
       user-mail-address "kovalev5690@gmail.com")
 
-(setq doom-font (font-spec :family "JetBrains Mono" :size 15)
-      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 15)
+(setq doom-font (font-spec :family "JetBrains Mono" :size 14)
+      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 14)
       doom-big-font (font-spec :family "Source Code Pro" :size 24)
       doom-unicode-font doom-font)
 (after! doom-themes

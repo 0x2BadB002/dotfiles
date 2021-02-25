@@ -78,8 +78,9 @@
        (syntax
         +childframe)       ; tasing you for every semicolon you forget
        (spell
+        +flyspell
         +everywhere
-        +aspell)           ; tasing you for misspelling mispelling
+        +hunspell)         ; tasing you for misspelling mispelling
        grammar             ; tasing grammar mistake every you make
 
        :tools

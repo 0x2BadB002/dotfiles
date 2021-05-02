@@ -19,6 +19,19 @@
 (setq +latex-viewers '(zathura))
 (setq org-directory "~/org/")
 
+(setq-default
+ delete-by-moving-to-trash t
+ window-combination-resize t
+ x-stretch-cursor t)
+
+(add-hook! go-mode 'subword-mode)
+
+(map! :map LaTeX-mode-map
+      :localleader
+      :desc "View" "v" #'TeX-view
+      :desc "Compile" "c" #'TeX-command-master
+      :desc "Run all" "a" #'TeX-command-run-all)
+
 (after! ispell
   (setq ispell-dictionary "en_US,ru_RU")
   (ispell-set-spellchecker-params)

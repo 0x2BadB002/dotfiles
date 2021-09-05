@@ -16,8 +16,9 @@
   '(font-lock-keyword-face :slant italic))
 (setq display-line-numbers-type t)
 
-(setq +latex-viewers '(zathura))
-(setq org-directory "~/org/")
+(setq org-directory "~/org/"
+      projectile-project-search-path '("~/Projects/")
+      all-the-icons-scale-factor 1.0)
 
 (setq-default
  delete-by-moving-to-trash t
@@ -26,6 +27,7 @@
 
 (add-hook! go-mode 'subword-mode)
 
+(setq +latex-viewers '(zathura))
 (map! :map LaTeX-mode-map
       :localleader
       :desc "View" "v" #'TeX-view

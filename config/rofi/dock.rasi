@@ -24,7 +24,7 @@ window {
     text-color:                     @foreground;
     border:                         0px;
     border-color:                   @border;
-    border-radius:                  30px;
+    border-radius:                  15px;
     width:                          30%;
     location:                       west;
     x-offset:                       20px;

@@ -158,10 +158,10 @@ super + ctrl + Return
 #
 
 XF86AudioRaiseVolume
-	~/.bin/change_volume.sh 5%+
+	change_volume.sh 5%+
 
 XF86AudioLowerVolume
-	~/.bin/change_volume.sh 5%-
+	change_volume.sh 5%-
 
 XF86AudioPlay
 	mpc toggle
@@ -170,4 +170,4 @@ XF86Calculator
 	qalculate-gtk
 
 XF86AudioMute
-	~/.bin/change_volume.sh toggle
+	change_volume.sh toggle

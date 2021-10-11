@@ -3,33 +3,30 @@
 # If refreshing bspwm, remove all previous rules to prevent doubling up.
 bspc rule -r "*"
 
+daemonize() {
+    program=$1
+    name=$(echo "$program" | awk '{printf $1}')
+    pgrep -u "$UID" -x "$name" > /dev/null || eval "${program}" >> /tmp/bspwm_log
+}
+
+daemonize "sxhkd" &
+daemonize "picom" &
+daemonize "dunst" &
+daemonize "nm-applet" &
+daemonize "redshift -l 59:30" &
+daemonize "gxkb" &
+daemonize "emacs --daemon" &
+
 # Autostart
 nitrogen --restore &
 xsetroot -cursor_name left_ptr &
 setxkbmap us,ru -option 'grp:win_space_toggle' &
-(sleep 2s && bash -c '~/.config/polybar/launch.sh' 2> /tmp/bspwm_log > /tmp/bspwm_log) &
-
-daemonize() {
-    program=$1
-    name=$(echo "$program" | awk '{printf $1}')
-    pgrep -u "$UID" -x "$name" > /dev/null || eval "$program" >> /tmp/bspwm_log
-}
-
-daemonize "sxhkd" &
-daemonize "xfsettingsd" &
-daemonize "xfce4-power-manager -no-daemon" &
-daemonize "xfce4-screensaver" &
-daemonize "picom --experimental-backends" &
-daemonize "dunst" &
-daemonize "nm-applet" &
-daemonize "redshift-gtk -l 59:30" &
-daemonize "gxkb" &
-daemonize "emacs --fg-daemon" &
+bash -c '~/.config/polybar/launch.sh' &
 
 # Workspaces setup
 bspc monitor -d 1 2 3 4 5 6
 
-bspc config border_width         0
+bspc config border_width 2
 
 bspc config split_ratio             0.50
 bspc config borderless_monocle      true
@@ -49,4 +46,5 @@ bspc rule -a Zathura state=tiled
 bspc rule -a Skype state=floating
 bspc rule -a Qalculate-gtk state=floating
 bspc rule -a Steam state=floating
+bspc rule -a zoom state=floating
 

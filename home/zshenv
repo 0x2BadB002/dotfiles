@@ -1,3 +1,6 @@
 typeset -U PATH path
 path=("$HOME/.local/bin" "$path[@]")
 export PATH
+
+export EDITOR='nvim'
+export GOPATH="$HOME/.cache/go"

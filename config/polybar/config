@@ -47,7 +47,7 @@ fixed-center = true
 
 modules-left = bspwm
 modules-center = xwindow
-modules-right = alsa date time 
+modules-right = pulseaudio date time
 
 tray-position = right
 tray-padding = 10
@@ -166,8 +166,8 @@ format-foreground = ${colors.nord0}
 format-background = ${colors.nord15}
 format-padding = 2
 
-[module/alsa]
-type = internal/alsa
+[module/pulseaudio]
+type = internal/pulseaudio
 
 format-volume = <ramp-volume> <label-volume>
 format-volume-padding = 2

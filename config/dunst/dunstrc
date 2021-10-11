@@ -125,7 +125,7 @@
     #   %n  progress value if set without any extra characters
     #   %%  Literal %
     # Markup is allowed
-    format = "<b>%s</b>\n%b\n%p"
+    format = "<b>%s%p</b>\n%b"
 
     # Alignment of message text.
     # Possible values are "left", "center" and "right".
@@ -288,6 +288,7 @@
 [change_volume]
     appname = changeVolume
     history_ignore = yes
+    highlight = "#d8dee9"
     timeout = 2
 
 #[espeak]

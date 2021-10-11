@@ -1,4 +1,3 @@
-install_zsh.sh
 config/broot/launcher
 config/nvim/bundle/
 config/vifm/vifminfo
@@ -8,3 +7,4 @@ config/mpd/pid
 config/mpd/database
 config/mpd/state
 config/mpd/sticker.sql
+config/ncmpcpp/error.log

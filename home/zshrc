@@ -29,8 +29,8 @@ zle -N down-line-or-beginning-search
 
 # Aliases
 alias ls="ls --color=auto --classify=auto"
-alias ll="ls -l"
-alias la="ls -Al"
+alias ll="ls -lh"
+alias la="ls -Alh"
 alias rm="rm -iv"
 alias mv="mv -iv"
 alias gst="git status"

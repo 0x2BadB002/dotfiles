@@ -6,22 +6,25 @@ bspc rule -r "*"
 daemonize() {
     program=$1
     name=$(echo "$program" | awk '{printf $1}')
+    sleep 2
     pgrep -u "$UID" -x "$name" > /dev/null || eval "${program}" >> /tmp/bspwm_log
 }
 
 daemonize "sxhkd" &
 daemonize "picom" &
 daemonize "dunst" &
+
+# Autostart
+nitrogen --restore
+xsetroot -cursor_name left_ptr
+setxkbmap us,ru -option 'grp:win_space_toggle'
+
+bash -c '${HOME}/.config/polybar/launch.sh' &
+daemonize "emacs --daemon" &
 daemonize "nm-applet" &
 daemonize "redshift -l 59:30" &
 daemonize "gxkb" &
-daemonize "emacs --daemon" &
-
-# Autostart
-nitrogen --restore &
-xsetroot -cursor_name left_ptr &
-setxkbmap us,ru -option 'grp:win_space_toggle' &
-bash -c '~/.config/polybar/launch.sh' &
+daemonize "udiskie" &
 
 # Workspaces setup
 bspc monitor -d 1 2 3 4 5 6

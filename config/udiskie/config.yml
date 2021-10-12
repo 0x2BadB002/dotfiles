@@ -1,0 +1,7 @@
+program_options:
+  tray:         auto
+  file_manager: "alacritty -e 'vifm'"
+  terminal:     "alacritty --working-directory"
+
+notifications:
+  timeout: 5  # seconds

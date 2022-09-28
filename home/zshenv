@@ -1,6 +1,21 @@
+#!/usr/bin/env zsh
+
 typeset -U PATH path
-path=("$HOME/.local/bin" "$path[@]")
+path=("$HOME/.local/share/go/bin" "$HOME/.local/bin" "$path[@]")
 export PATH
 
-export EDITOR='nvim'
-export GOPATH="$HOME/.cache/go"
+export EDITOR="nvim"
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_CACHE_HOME="$HOME/.cache"
+
+export HISTFILE="${XDG_CACHE_HOME:-$HOME/.cache}/history"
+export DIRSTACKFILE="${XDG_CACHE_HOME:-$HOME/.cache}/dirstack"
+
+export GOPATH="${XDG_DATA_HOME:-$HOME/.local/share}/go"
+export CARGO_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/cargo"
+export RUSTUP_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/rustup"
+
+export JDK_JAVA_OPTIONS="-Dsun.java2d.opengl=true -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
+

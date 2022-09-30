@@ -17,30 +17,38 @@ function change_cover() {
 }
 
 function extract_cover() {
+    local music_dir temp_song cover_file current_music_file
     music_dir="$HOME/Music"
     temp_song="/tmp/current-song"
+    cover_file="/tmp/cover.png"
+    current_music_file="$(mpc --format %file% current)"
 
-    cp "$music_dir/$(mpc --format %file% current)" "$temp_song"
+    if [[ -r "${music_dir}/${current_music_file}" ]]; then
+        cp "${music_dir}/${current_music_file}" "${temp_song}"
 
-    ffmpeg \
-        -hide_banner \
-        -loglevel 0 \
-        -y \
-        -i "$temp_song" \
-        -vf scale=400:-1 \
-        "/tmp/cover.png" > /dev/null 2>&1
+        ffmpeg \
+            -hide_banner \
+            -loglevel 0 \
+            -y \
+            -i "${temp_song}" \
+            -vf scale=400:-1 \
+            "${cover_file}" >/dev/null 2>&1
 
-    convert /tmp/cover.png -resize 512x512 /tmp/resized.png
-    rm "$temp_song"
+        convert "${cover_file}" -resize 512x512 /tmp/resized.png
+        rm "${temp_song}"
+    fi
 }
 
 function send_notification() {
-    dunstify -I "/tmp/resized.png" "$(mpc --format "%title%\n\n%artist%" current)"
+    if [[ -e "/tmp/resized.png" ]]; then
+        dunstify -a "mpd" -I "/tmp/resized.png" "$(mpc --format "%title%\n\n%artist%" current)"
+    else
+        dunstify -a "mpd" "$(mpc --format "%title%\n\n%artist%" current)"
+    fi
 }
 
 if [[ $1 == "extract" ]]; then
     extract_cover
-    change_cover
     send_notification
 else
     launch_player

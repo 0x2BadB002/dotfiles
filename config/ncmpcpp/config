@@ -14,7 +14,7 @@ current_item_suffix = $/r$(end)$/b
 current_item_inactive_column_prefix = $(magenta)$r
 current_item_inactive_column_suffix = $/r$(end)
 
-execute_on_song_change = "~/.config/ncmpcpp/cover.sh extract"
+execute_on_song_change = "cover.sh extract"
 playlist_display_mode = columns
 browser_display_mode = columns
 progressbar_look = ->

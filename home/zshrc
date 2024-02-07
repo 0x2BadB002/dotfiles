@@ -89,6 +89,18 @@ zle -N down-line-or-beginning-search
 # Ignore comments
 setopt interactive_comments
 
+# Window title
+precmd ()  { print -Pn "\e]0;[%n@%M][%~]%#\a" } 
+preexec () { print -Pn "\e]0;[%n@%M][%~]%# ($1)\a" }
+
+# dircolors setup
+[[ -r "${HOME}/.config/dir_colors" ]] && eval $(dircolors $HOME/.config/dir_colors)
+
+# Source files
+source ${HOME}/.config/broot/launcher/bash/br
+source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # Aliases
 alias ls="ls --color=auto --classify=auto"
 alias ll="ls -lh"
@@ -102,18 +114,7 @@ alias gaa="git add --all"
 alias gc="git commit"
 alias gp="git push"
 alias gl="git pull"
-
-# Window title
-precmd ()  { print -Pn "\e]0;[%n@%M][%~]%#\a" } 
-preexec () { print -Pn "\e]0;[%n@%M][%~]%# ($1)\a" }
-
-# Source files
-source ${HOME}/.config/broot/launcher/bash/br
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
-
-# dircolors setup
-[[ -r "${HOME}/.config/dir_colors" ]] && eval $(dircolors $HOME/.config/dir_colors)
+alias hx="helix"
 
 # Prompt setup
 eval "$(starship init zsh)"

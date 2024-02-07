@@ -33,13 +33,13 @@
        modeline            ; snazzy, Atom-inspired modeline, plus API
        nav-flash           ; blink the current line after jumping
        minimap             ; show a map of the code on the side
-       ;;neotree           ; a project drawer, like NERDTree for vim
+       neotree             ; a project drawer, like NERDTree for vim
        ophints             ; highlight the region an operation acts on
        (popup              ; tame sudden yet inevitable temporary windows
         +all               ; catch all popups that start with an asterix
         +defaults)         ; default popup rules
        ;;tabs              ; an tab bar for Emacs
-       (treemacs +lsp)     ; a project drawer, like neotree but cooler
+       ;;(treemacs +lsp)   ; a project drawer, like neotree but cooler
        unicode             ; extended unicode support for various languages
        (vc-gutter +pretty) ; vcs diff in the fringe
        vi-tilde-fringe     ; fringe tildes to mark beyond EOB
@@ -64,7 +64,7 @@
        :emacs
        (dired
         +icons
-        +dirvish)           ; making dired pretty [functional]
+        +dirvish)          ; making dired pretty [functional]
        electric            ; smarter, keyword-based electric-indent
        (ibuffer +icons)    ; interactive buffer management
        (undo +tree)        ; persistent, smarter undo for your inevitable mistakes
@@ -87,7 +87,7 @@
 
        :tools
        ;;ansible
-       (debugger +lsp)     ; FIXME stepping through code, to help you add bugs
+       ;;(debugger +lsp)   ; FIXME stepping through code, to help you add bugs
        ;;direnv
        (docker +lsp)
        editorconfig        ; let someone else argue about tabs vs spaces
@@ -95,7 +95,7 @@
        (eval +overlay)     ; run code, run (also, repls)
        ;;gist              ; interacting with github gists
        lookup              ; helps you navigate your code and documentation
-       (lsp +peek)
+       (lsp +eglot)
        (magit +forge)      ; a git porcelain for Emacs
        make                ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
@@ -123,7 +123,9 @@
        ;;elm               ; care for a cup of TEA?
        emacs-lisp          ; drown in parentheses
        ;;erlang            ; an elegant language for a more civilized age
-       ;;ess               ; emacs speaks statistics
+       (ess
+        +lsp
+        +tree-sitter)      ; emacs speaks statistics
        ;;faust             ; dsp, but you get to keep your soul
        ;;fsharp            ; ML stands for Microsoft's Language
        (go
@@ -132,15 +134,16 @@
        ;;(haskell +dante)  ; a language that's lazier than I am
        ;;hy                ; readability of scheme w/ speed of python
        ;;idris             ;
-       json                ; At least it ain't XML
-       (java +lsp)         ; the poster child for carpal tunnel syndrome
+       (json
+        +lsp
+        +tree-sitter)      ; At least it ain't XML
+       ;;(java +lsp)       ; the poster child for carpal tunnel syndrome
        (javascript
-        +tree-sitter
-        +lsp)              ; all(hope(abandon(ye(who(enter(here))))))
+        +lsp
+        +tree-sitter)      ; all(hope(abandon(ye(who(enter(here))))))
        ;;julia             ; a better, faster MATLAB
        ;;kotlin            ; a better, slicker Java(Script)
-       (latex
-        +lsp)              ; writing papers in Emacs has never been so fun
+       (latex +lsp)        ; writing papers in Emacs has never been so fun
        ;;lean              ; for folks with too much to prove
        ;;factor
        ;;ledger            ; an accounting system in Emacs
@@ -162,25 +165,30 @@
        ;;plantuml          ; diagrams for confusing people more
        ;;purescript        ; javascript, but functional
        (python
-        +lsp)              ; beautiful is better than ugly
+        +lsp
+        +tree-sitter)      ; beautiful is better than ugly
        ;;qt                ; the 'cutest' gui framework ever
        ;;racket            ; a DSL for DSLs
        ;;rest              ; Emacs as a REST client
        ;;rst               ; ReST in peace
        ;;ruby              ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-       (rust +lsp)         ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+       (rust
+        +lsp
+        +tree-sitter)      ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala             ; java, but good
        ;;scheme            ; a fully conniving family of lisps
        (sh
-        +tree-sitter
-        +lsp)              ; she sells {ba,z,fi}sh shells on the C xor
+        +lsp
+        +tree-sitter)      ; she sells {ba,z,fi}sh shells on the C xor
        ;;solidity          ; do you need a blockchain? No.
        ;;swift             ; who asked for emoji variables?
        ;;terra             ; Earth and Moon in alignment for performance.
        (web
-        +tree-sitter
-        +lsp)              ; the tubes
-       yaml                ; JSON, but readable
+        +lsp
+        +tree-sitter)      ; the tubes
+       (yaml
+        +lsp
+        +tree-sitter)      ; JSON, but readable
 
        :email
        ;;(mu4e +gmail)

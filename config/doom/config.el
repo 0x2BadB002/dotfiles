@@ -4,8 +4,8 @@
       user-mail-address "kovalev5690@gmail.com")
 
 (setq doom-theme 'doom-nord)
-(setq doom-font (font-spec :family "JetBrains Mono" :size 18)
-      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 18)
+(setq doom-font (font-spec :family "JetBrains Mono" :size 14)
+      doom-variable-pitch-font (font-spec :family "Ubuntu" :size 14)
       doom-big-font (font-spec :family "JetBrains Mono" :size 30)
       doom-unicode-font doom-font)
 (after! doom-themes
@@ -36,6 +36,13 @@
       :desc "View" "v" #'TeX-view
       :desc "Compile" "c" #'TeX-command-master
       :desc "Run all" "a" #'TeX-command-run-all)
+
+(set-eglot-client! 'cc-mode '("clangd" "-j=3"
+                              "--clang-tidy"
+                              "--completion-style=bundled"
+                              "--malloc-trim"
+                              "--pch-storage=memory"
+                              "--header-insertion=iwyu"))
 
 ;; (map! :map dap-mode-map
 ;;       :leader

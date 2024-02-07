@@ -1,7 +1,7 @@
 #!/usr/bin/env zsh
 
 typeset -U PATH path
-path=("$HOME/.local/share/go/bin" "$HOME/.local/bin" "${path[@]}")
+path=("$HOME/.local/share/go/bin" "$HOME/.local/bin" "$HOME/.bin" "${path[@]}")
 export PATH
 
 export EDITOR="nvim"

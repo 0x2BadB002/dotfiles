@@ -3,11 +3,11 @@ Dotfiles
 
 | Program              | Name                  |
 |----------------------|-----------------------|
-| Window manager       | `bspwm`               |
+| Window manager       | `bspwm`, `hyprland`   |
 | Window Compositor    | `picom`               |
 | Notification daemon  | `dunst`               |
 | Terminal             | `alacritty`           |
-| Shell                | `zsh`,`oh-my-zsh`     |
+| Shell                | `zsh`,`starship`      |
 | Application launcher | `rofi`                |
 | Music player         | `mpd`, `ncmpcpp`      |
 | Editor               | `neovim`,`doom emacs` |
@@ -15,10 +15,6 @@ Dotfiles
 
 Screenshots
 -----------------
-Overview:
-
-![overview-img](misc/overview.png)
-
 Rofi:
 
 ![rofi-img](misc/rofi.png)

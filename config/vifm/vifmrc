@@ -64,7 +64,7 @@ set norunexec
 
 " Selected color scheme
 
-colorscheme gruvbox
+colorscheme nord
 
 " Format for displaying time in file list. For example:
 " TIME_STAMP_FORMAT=%m/%d-%H:%M
@@ -93,7 +93,7 @@ set smartcase
 
 " Don't highlight search results automatically
 
-set nohlsearch
+" set nohlsearch
 
 " Use increment searching (search while typing)
 set incsearch
@@ -116,7 +116,6 @@ set statusline="  Hint: %z%= %A %10u:%-7g %15s %20d  "
 
 " :mark mark /full/directory/path [filename]
 
-mark b ~/bin/
 mark h ~/
 
 " ------------------------------------------------------------------------------
@@ -171,7 +170,7 @@ command! reload :write | restart
 " program.
 
 " Pdf
-filextype *.pdf zathura %c %i &, apvlv %c, xpdf %c
+filextype *.pdf zathura %c %i &, apvlv %c, xpdf %c, evince %c &
 fileviewer *.pdf pdftotext -nopgbrk %c -
 
 " PostScript
@@ -228,11 +227,7 @@ fileviewer *.[1-8] man ./%c | col -b
 " Images
 filextype *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
         \ {View in sxiv}
-        \ sxiv %f,
-        \ {View in gpicview}
-        \ gpicview %c,
-        \ {View in shotwell}
-        \ shotwell,
+        \ eog %f,
 fileviewer *.bmp,*.jpg,*.jpeg,*.png,*.gif,*.xpm
          \ convert -identify %f -verbose /dev/null
 

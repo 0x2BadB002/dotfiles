@@ -1,0 +1,4 @@
+[language-server.texlab]
+command = "texlab"
+args = [ "-X", "compile", "%f", "--synctex", "--keep-logs", "--keep-intermediates" ] 
+config = { texlab = { build = { onSave = true, executable = "tectonic" } } }

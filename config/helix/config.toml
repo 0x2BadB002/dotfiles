@@ -1,0 +1,29 @@
+theme = "nord"
+
+[editor]
+true-color = true
+color-modes = true
+cursorline = true
+bufferline = "multiple"
+
+[editor.lsp]
+display-messages = true
+display-inlay-hints = true
+auto-signature-help	= true
+display-signature-help-docs	= true
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "block"
+
+[editor.indent-guides]
+render = false
+
+[editor.statusline]
+left = ["mode", "file-name", "workspace-diagnostics"]
+right = ["spinner", "version-control", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
+separator = "│"
+
+[editor.soft-wrap]
+enable = true

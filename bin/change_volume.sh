@@ -5,7 +5,7 @@ operation="$1"
 # Arbitrary but unique message id
 msg_id="991049"
 
-function get_alsa_volume {
+get_alsa_volume() {
     local str
     # Query amixer for the current volume and whether or not the speaker is muted
     str="$(amixer get Master | tail -n 1)"
@@ -13,7 +13,7 @@ function get_alsa_volume {
     [[ "$volume" == "on" ]] && volume=$(printf '%s' "$str" | awk -F 'Right:|[][]' 'BEGIN {RS=""}{ print $3 }')
 }
 
-function get_pulse_volume {
+get_pulse_volume() {
     local str
     str=$(pactl get-sink-mute @DEFAULT_SINK@ | awk -F ": " '{printf $2}')
     if [[ "$str" == "no" ]]; then
@@ -28,15 +28,16 @@ function get_pulse_volume {
     fi
 }
 
-function alsa_change_volume {
-    if [[ "$operation" == "toggle" ]]; then
-        amixer sset Master toggle > /dev/null
-    else
-        amixer sset Master "$operation" > /dev/null
-    fi
+get_wireplumber_volume() {
+    volume=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | \
+        awk -F ": " '{n = split($2, arr, " "); if (n > 1) print "off"; else print substr($2,3)}')
 }
 
-function pulse_change_volume {
+alsa_change_volume() {
+    amixer sset Master "$operation" > /dev/null
+}
+
+pulse_change_volume() {
     if [[ "$operation" == "toggle" ]]; then
         pactl set-sink-mute @DEFAULT_SINK@ toggle
     else
@@ -45,7 +46,18 @@ function pulse_change_volume {
     fi
 }
 
-if command -v "pactl" &> /dev/null; then
+wireplumber_change_volume() {
+    if [[ "$operation" == "toggle" ]]; then
+        wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+    else
+        wpctl set-volume @DEFAULT_AUDIO_SINK@ -l 1 "$operation"
+    fi
+}
+
+if command -v "wpctl" &>/dev/null; then
+    wireplumber_change_volume    
+    get_wireplumber_volume
+elif command -v "pactl" &>/dev/null; then
     pulse_change_volume
     get_pulse_volume
 else
@@ -55,8 +67,7 @@ fi
 
 if [[ "$volume" == "off" ]]; then
     # Show the sound muted notification
-    [[ "$XDG_SESSION_TYPE" == "wayland" ]] \
-        || dunstify -a "changeVolume" -u low -i "notification-audio-volume-muted" -r "$msg_id" "Volume muted"
+    dunstify -a "changeVolume" -u low -i "notification-audio-volume-muted" -r "$msg_id" "Volume muted"
 else
     if (( volume >= 50 )); then
         volume_icon="notification-audio-volume-high"
@@ -66,9 +77,8 @@ else
         volume_icon="notification-audio-volume-low"
     fi
     # Show the volume notification
-    [[ "$XDG_SESSION_TYPE" == "wayland" ]] || \
-	    dunstify -a "changeVolume" -u low -i "$volume_icon" -r "$msg_id" \
-        -h int:value:${volume} "Volume: "
+    dunstify -a "changeVolume" -u low -i "$volume_icon" -r "$msg_id" \
+      -h "int:value:${volume}" "Volume: "
 
     # Play the volume changed sound
     canberra-gtk-play -i audio-volume-change -d "changeVolume"

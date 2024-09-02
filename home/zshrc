@@ -116,5 +116,8 @@ alias gp="git push"
 alias gl="git pull"
 alias hx="helix"
 
+# direnv setup
+eval "$(direnv hook zsh)"
+
 # Prompt setup
 eval "$(starship init zsh)"

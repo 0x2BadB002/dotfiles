@@ -41,3 +41,4 @@ set highlight-color         "#88c0d0"
 set highlight-active-color  "#5e81ac"
 
 set adjust-open "width"
+set selection-clipboard clipboard

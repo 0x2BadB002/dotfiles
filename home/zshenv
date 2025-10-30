@@ -19,8 +19,11 @@ export HISTFILE="${XDG_CACHE_HOME}/history"
 export DIRSTACKFILE="${XDG_CACHE_HOME}/dirstack"
 
 export NPM_CONFIG_USERCONFIG="${XDG_CONFIG_HOME}/npm/npmrc"
+export R_PROFILE_USER="${XDG_CONFIG_HOME}/r/.Rprofile"
 
 export JDK_JAVA_OPTIONS="-Dsun.java2d.opengl=true -Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
+
+export SSH_AUTH_SOCK="$(ssh-tpm-agent --print-socket)"
 
 typeset -U PATH path
 path=("${GOPATH}/bin" "$HOME/.local/bin" "/usr/lib/rustup/bin" "${path[@]}")

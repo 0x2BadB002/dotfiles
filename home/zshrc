@@ -17,15 +17,15 @@ zstyle ':completion:*:functions' ignored-patterns '_*'
 # cd will never select the parent directory (e.g.: cd ../<TAB>)
 zstyle ':completion:*:cd:*' ignore-parents parent pwd
 
-# Switch to emacs mode
-bindkey -e
-
-# Prevent freezing the terminal with ctrl-s
-stty stop undef
-
-# Disable flow control
-setopt noflowcontrol
-
+# # Switch to emacs mode
+# bindkey -e
+#
+# # Prevent freezing the terminal with ctrl-s
+# stty stop undef
+#
+# # Disable flow control
+# setopt noflowcontrol
+#
 # History setup
 HISTSIZE=10000
 SAVEHIST=10000
@@ -97,12 +97,11 @@ preexec () { print -Pn "\e]0;[%n@%M][%~]%# ($1)\a" }
 [[ -r "${HOME}/.config/dir_colors" ]] && eval $(dircolors $HOME/.config/dir_colors)
 
 # Source files
-source ${HOME}/.config/broot/launcher/bash/br
-source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+[[ -f "/usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]] && source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ -f "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh" ]] && source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 # Aliases
-alias ls="ls --color=auto --classify=auto"
+alias ls="ls --color=auto"
 alias ll="ls -lh"
 alias la="ls -Alh"
 alias rm="rm -iv"
@@ -115,6 +114,7 @@ alias gc="git commit"
 alias gp="git push"
 alias gl="git pull"
 alias hx="helix"
+alias R="R --no-save --quiet"
 
 # direnv setup
 eval "$(direnv hook zsh)"

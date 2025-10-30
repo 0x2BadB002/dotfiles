@@ -1,3 +1,6 @@
 [font]
-normal = ["JetbrainsMono Nerd Font"]
-size = 12
+normal = ["Iosevka Nerd Font"]
+size = 14
+
+[box-drawing]
+mode = "native"
